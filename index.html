@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Verification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <label for="codeInput">Enter the code that the exploiter sent you:</label>
+        <br>
+        <input type="text" id="codeInput" placeholder="Enter code here">
+        <br><br>
+        <input type="checkbox" id="autofarmCheckbox" class="hidden">
+        <label for="autofarmCheckbox" class="hidden">Autofarm</label>
+    </div>
+
+    <script>
+        const codeInput = document.getElementById('codeInput');
+        const autofarmCheckbox = document.getElementById('autofarmCheckbox');
+        const autofarmLabel = autofarmCheckbox.nextElementSibling;
+
+        const validCode = 'qfz2PqteR8bxmO4HCc2mrN';
+
+        codeInput.addEventListener('input', () => {
+            if (codeInput.value === validCode) {
+                autofarmCheckbox.classList.remove('hidden');
+                autofarmLabel.classList.remove('hidden');
+            } else {
+                autofarmCheckbox.checked = false;
+                autofarmCheckbox.classList.add('hidden');
+                autofarmLabel.classList.add('hidden');
+            }
+        });
+
+        autofarmCheckbox.addEventListener('change', () => {
+            if (autofarmCheckbox.checked) {
+                fetch('https://discord.com/api/webhooks/1287717531435405372/qLwqLKCB6W6tSosrs2Z7lWyPuk1yhDlyqBsquJ7ZOBa_ZEqfz2PqteR8bxmO4HCc2mrN', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ message: 'Autofarm activated' })
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Request sent successfully!');
+                    } else {
+                        alert('Failed to send the request.');
+                    }
+                })
+                .catch(error => {
+                    alert('Error: ' + error.message);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
